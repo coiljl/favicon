@@ -1,0 +1,9 @@
+{
+  "development": {
+    "server": "/Users/jkroso/Projects/JuliaLang/coil/server"
+  },
+  "production": {
+    "Response": "/Users/jkroso/Projects/JuliaLang/coil/Response",
+    "Request": "http://github.com/coiljl/Request/tarball/0.1.0"
+  }
+}
