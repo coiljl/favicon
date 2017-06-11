@@ -1,16 +1,12 @@
-@require "Response" Response
-@require "Request" Request
+@require "github.com/coiljl/server" Response Request
 
-##
-# Generates a Function which serves `path` as a favicon
-#
+"""
+Generates a Function which produces responses to favicon requests
+"""
 function favicon(path::String; maxage=86400000)
-  maxage = int(min(maxage/1000, 31556926))
-  OK = Response(200, [
-    "Cache-Control" => "public, max-age=$maxage",
-    "Content-Type" => "image/x-icon"
-  ], open(readbytes, path))
-
+  maxage = round(Int, min(maxage/1000, 31556926))
+  OK = Response(200, Dict("Cache-Control" => "public, max-age=$maxage", 
+                          "Content-Type" => "image/x-icon"), read(path))
   serve(::Request{:GET}) = OK
   serve(::Request{:HEAD}) = Response(OK.status, OK.meta)
   serve(::Request{:OPTIONS}) = Response(204, ["Allow"=>"GET, HEAD, OPTIONS"])

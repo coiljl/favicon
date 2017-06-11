@@ -1,6 +1,7 @@
-@require "server" start Response
-@require "favicon" favicon
+@require "github.com/coiljl/server" serve Response
+@require ".." favicon
 
-downstream(req) = Response(404)
+server = serve(favicon("favicon.ico")(r->Response(404)), 8000)
 
-start(favicon("favicon.ico")(downstream), 8000)
+println("server listening on http://localhost:8000")
+wait(server)
